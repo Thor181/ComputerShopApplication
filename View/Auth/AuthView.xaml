@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="ComputerShopApplication.View.Auth.AuthView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ComputerShopApplication.View.Auth"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="380" d:DesignWidth="300">
+    <Grid>
+        <StackPanel >
+            <!--Icon-->
+            <Image Source="pack://application:,,,/Resources/main_icon.png" 
+                       Width="150"
+                       Margin="0 -10 0 0"
+                       RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="-90"></RotateTransform>
+                </Image.RenderTransform>
+            </Image>
+            <!--Title-->
+            <TextBlock HorizontalAlignment="Center" 
+                           FontFamily="arial" 
+                           FontSize="19" 
+                           FontWeight="Black" 
+                           TextWrapping="Wrap" 
+                           MaxWidth="160"
+                           Margin="0 -20 0 0"
+                           TextAlignment="Center"
+                           Text="COMPUTER ACCESSORIES SHOP">
+            </TextBlock>
+            <!--login textbox-->
+            <TextBox x:Name="LoginTextbox"
+                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                             HorizontalAlignment="Center"
+                             Background="White"
+                             Width="200"    
+                             Margin="0 5 0 0"
+                             materialDesign:HintAssist.Hint="Логин"/>
+            <!--password textbox-->
+            <PasswordBox x:Name="PasswordTextbox"
+                             Style="{DynamicResource MaterialDesignOutlinedPasswordBox}"
+                             HorizontalAlignment="Center"
+                             Background="White"
+                             Width="200"    
+                             Margin="0 5 0 0"
+                             materialDesign:HintAssist.Hint="Пароль"/>
+            <!--signin button-->
+            <Button x:Name="SignInButton"
+                            Click="SignInButton_Click"
+                        Style="{DynamicResource ButtonStandart}"
+                        Margin="0 5 0 0"
+                        Content="Вход"/>
+            <!--register button-->
+            <Label HorizontalAlignment="Center" FontFamily="arial">
+                <Hyperlink x:Name="RegisterHyperlink" Click="RegisterHyperlink_Click">Регистрация</Hyperlink>
+            </Label>
+        </StackPanel>
+    </Grid>
+</UserControl>

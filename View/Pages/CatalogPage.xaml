@@ -1,0 +1,103 @@
+﻿<Page x:Class="ComputerShopApplication.View.Pages.CatalogPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ComputerShopApplication.View.Pages"
+      xmlns:localView="clr-namespace:ComputerShopApplication.View.Card"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CatalogPage" d:Background="white">
+
+    <Grid x:Name="PageMainGrid" >
+        <ScrollViewer>
+
+            <WrapPanel x:Name="PageMainWrapPanel" HorizontalAlignment="Center"/>
+
+        </ScrollViewer>
+        <ToggleButton Background="#2C5364" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
+            <materialDesign:PackIcon Kind="FilterVariant" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ToggleButton.Triggers>
+                <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                    <BeginStoryboard>
+                        <Storyboard x:Name="Hide">
+                            <DoubleAnimation Storyboard.TargetName="FilterMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="400" To="0" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="FilterMenu" Storyboard.TargetProperty="Height" BeginTime="0:0:0" From="300" To="0" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ToggleButton.Checked">
+                    <BeginStoryboard>
+                        <Storyboard x:Name="Show">
+                            <DoubleAnimation Storyboard.TargetName="FilterMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="0" To="400" Duration="0:0:0.2" />
+                            <DoubleAnimation Storyboard.TargetName="FilterMenu" Storyboard.TargetProperty="Height" BeginTime="0:0:0" From="0" To="300" Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </ToggleButton.Triggers>
+        </ToggleButton>
+        <!--filter menu-->
+        <Border x:Name="FilterMenu"
+                        Height="0" Width="0" 
+                        Grid.Row="0" Grid.Column="1" 
+                        HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Margin="50 29 0 0" 
+                        CornerRadius="8"
+                        Background="{StaticResource MainGradient}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10" Grid.Column="0">
+                    <TextBlock Text="КАТЕГОРИЯ" FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" Foreground="White" Margin="0 0 0 5"/>
+                    <ComboBox x:Name="FilterCategoryCombobox" Margin="0 0 0 10" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="White" Foreground="Black">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}">
+                                    
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
+                    <TextBlock Text="ПРОИЗВОДИТЕЛЬ" FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" Foreground="White" Margin="0 0 0 5"/>
+                    <ComboBox x:Name="FilterManufacturerCombobox"  Margin="0 0 0 10" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="White" Foreground="Black">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}">
+
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <TextBlock Text="НАИМЕНОВАНИЕ СОДЕРЖИТ..." FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" Foreground="White" Margin="0 0 0 5"/>
+                    <TextBox x:Name="FilterNameTextbox" Margin="0 0 0 10" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Background="White" Foreground="Black"></TextBox>
+
+                </StackPanel>
+                <StackPanel Margin="10" Grid.Column="1">
+                    <TextBlock Text="СТОИМОСТЬ ОТ..." FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" Foreground="White" Margin="0 0 0 5"/>
+                    <TextBox x:Name="FilterPriceFromTextbox" Margin="0 0 0 10" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Background="White" Foreground="Black"/>
+                    <TextBlock Text="ДО..." FontFamily="{StaticResource MaterialDesignFont}" FontSize="13" Foreground="White" Margin="0 0 0 5"/>
+                    <TextBox x:Name="FilterPriceToTextbox" Margin="0 0 0 10" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Background="White" Foreground="Black"/>
+                </StackPanel>
+
+                <Button x:Name="FilterOkButton" Click="FilterOkButton_Click"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                                Background="#065274" BorderBrush="#065275" materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                Grid.ColumnSpan="2"
+                                Margin="0 10">
+                    <Button.Content>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Check" Margin="0 2 3 0"></materialDesign:PackIcon>
+                            <TextBlock Text="ПОДТВЕРДИТЬ"></TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

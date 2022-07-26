@@ -1,0 +1,55 @@
+﻿<Page x:Class="ComputerShopApplication.View.Pages.AddPages.AddAccessoryPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ComputerShopApplication.View.Pages.AddPages"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddAcessoryPage">
+
+    <Grid d:Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 10 0">
+            <TextBox x:Name="NameTextbox" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Background="White" Width="150" materialDesign:HintAssist.Hint="Наименование"/>
+            <ComboBox x:Name="ManufacturerCombobox" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="White" Width="150" Margin="0 5 0 0" materialDesign:HintAssist.Hint="Производитель">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox x:Name="CategoryCombobox" Style="{DynamicResource MaterialDesignOutlinedComboBox}" Background="White" Width="150" Margin="0 5 0 0" materialDesign:HintAssist.Hint="Категория">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBox x:Name="PriceTextbox" Style="{DynamicResource MaterialDesignOutlinedTextBox}" Background="White" materialDesign:HintAssist.Hint="Стоимость" Margin="0 5 0 0"></TextBox>
+            <CheckBox x:Name="IsGamingCheckbox" Content="Игровой аксессуар" Margin="0 5 0 0" Background="White" Foreground="white"></CheckBox>
+        </StackPanel>
+        <Grid x:Name="GridPhoto" MouseLeftButtonDown="GridPhoto_MouseLeftButtonDown" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10 0 0 20" MaxWidth="250">
+            <Rectangle Fill="DarkCyan" Height="200" Width="200"/>
+            <Rectangle Fill="White" Height="190" Width="190"/>
+            <Rectangle Fill="White" Height="210" Width="170"/>
+            <Rectangle Fill="White" Height="170" Width="210"/>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline3TextBlock}" Foreground="Gray" 
+                           Text="Нажмите здесь чтобы загрузить изображение" FontSize="23" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Width="149" 
+                           TextTrimming="None">
+            </TextBlock>
+            <Image x:Name="PlaceForPhoto" Margin="40,10,40,10"  MaxHeight="190" MaxWidth="190"/>
+        </Grid>
+        <Button x:Name="AddButton" Style="{DynamicResource ButtonStandart}" Margin="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Click="AddButton_Click">
+            <Button.Content>
+                <TextBlock Text="Добавить" Margin="0 0 0 10"></TextBlock>
+            </Button.Content>
+            </Button>
+    </Grid>
+</Page>
+

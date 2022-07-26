@@ -1,0 +1,174 @@
+﻿<Window x:Class="ComputerShopApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ComputerShopApplication"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="CAS" Height="550" Width="1000" Style="{DynamicResource CustomWindow}" MouseDown="Window_MouseDown" Icon="/Resources/icon.png">
+    <Grid>
+        <Border Style="{DynamicResource BorderCanvas}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--control keys-->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5">
+                    <Button x:Name="MinimizeButton" Style="{StaticResource ControlKey}" Content="{DynamicResource MinimizeIcon}" Tag="NotCloseButton" Click="MinimizeButton_Click"/>
+                    <Button x:Name="FullViewButton" Style="{StaticResource ControlKey}" Content="{DynamicResource MaximizeIcon}" Tag="NotCloseButton" Click="FullViewButton_Click"/>
+                    <Button x:Name="CloseAppButton" Style="{StaticResource ControlKey}" Content="{DynamicResource CloseIcon}" Tag="CloseButton" Click="CloseAppButton_Click" Cursor="Hand"/>
+                </StackPanel>
+                <!--side menu-->
+                <Border CornerRadius="8 0 0 8" Width="43" MaxWidth="125" d:Width="125" Background="{StaticResource MainGradient}" x:Name="MenuBorder">
+                    <StackPanel Grid.Column="0"  HorizontalAlignment="Left" >
+                        <TextBlock x:Name="TitleTextblock"
+                               Text="CAS"
+                               FontSize="13"
+                               HorizontalAlignment="Center"
+                               MaxWidth="90" 
+                               FontWeight="Black"
+                               Foreground="White"
+                               FontStretch="UltraExpanded"
+                               FontFamily="{StaticResource MaterialDesignFont}"
+                               Margin="5"/>
+                        <!--menu buttons-->
+                        <Button x:Name="CatalogButton" Style="{DynamicResource ButtonMenu}" Click="CatalogButton_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ExpansionCard" Width="33" Height="33" HorizontalAlignment="Center" Margin="5 0 0 0"/>
+                                    <TextBlock Text="КАТАЛОГ" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <Button x:Name="CartButton" Style="{DynamicResource ButtonMenu}" Click="CartButton_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Cart" Width="30" Height="30" HorizontalAlignment="Center" Margin="8 0 0 0"/>
+                                    <TextBlock Text="КОРЗИНА" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <Button x:Name="AccountButton" Style="{DynamicResource ButtonMenu}" Click="AccountButton_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" Width="30" Height="30" HorizontalAlignment="Center" Margin="8 0 0 0"/>
+                                    <TextBlock Text="АККАУНТ" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <Button x:Name="AdminButton" Style="{DynamicResource ButtonMenu}" Click="AdminButton_Click" Visibility="Hidden" d:Visibility="Visible">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ShieldCrown" Width="30" Height="30" HorizontalAlignment="Center" Margin="8 0 0 0"/>
+                                    <TextBlock Text="АДМИН" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Border>
+                <!--side menu toggle button-->
+                <ToggleButton x:Name="SideMenuToggleButton"
+                    Style="{DynamicResource ToggleMenuButton}"
+                    Grid.Column="1" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Top" 
+                    Margin="3"
+                    IsChecked="False"
+                    RenderTransformOrigin="0.545,0.601">
+                    <ToggleButton.RenderTransform >
+                        <RotateTransform x:Name="ToggleButtonRotate" Angle="0"></RotateTransform>
+                    </ToggleButton.RenderTransform>
+                    <ToggleButton.Triggers>
+                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="HideStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="MenuBorder" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="125" To="43" Duration="0:0:0.2" />
+                                    <DoubleAnimation Storyboard.TargetName="ToggleButtonRotate" Storyboard.TargetProperty="Angle" BeginTime="0:0:0" From="180" To="0"  Duration="0:0:0.3"/>
+                                    <DoubleAnimation Storyboard.TargetName="TitleTextblock" Storyboard.TargetProperty="FontSize" BeginTime="0:0:0" From="25" To="14" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="ToggleButton.Checked">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="ShowStackPanel">
+                                    <DoubleAnimation Storyboard.TargetName="MenuBorder" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="43" To="125" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="ToggleButtonRotate" Storyboard.TargetProperty="Angle" BeginTime="0:0:0" From="0" To="-180" Duration="0:0:0.3"/>
+                                    <DoubleAnimation Storyboard.TargetName="TitleTextblock" Storyboard.TargetProperty="FontSize" BeginTime="0:0:0" From="14" To="25" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ToggleButton.Triggers>
+                </ToggleButton>
+                <!--main view-->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="85"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid x:Name="UserAccount" 
+                          Height="30" 
+                          VerticalAlignment="Center" 
+                          Margin="30 5 0 0">
+
+                        <!--account stackpanel-->
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Right" 
+                                    VerticalAlignment="Center" 
+                                    d:Background="Red">
+                            <TextBlock Text="{Binding Path=Login}" 
+                                       FontFamily="{StaticResource MaterialDesignFont}" 
+                                       FontSize="15" Margin="0 0 5 0"  
+                                       VerticalAlignment="Center"/>
+                            <Button x:Name="LogoutButton"
+                                Height="20" 
+                                    Width="20" 
+                                    Padding="0" 
+                                    Background="Transparent" 
+                                    BorderBrush="Transparent"
+                                    Click="LogoutButton_Click">
+                                <Border CornerRadius="15" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center" 
+                                        Height="20" 
+                                        Width="20" 
+                                        Background="Green" 
+                                        Padding="0">
+                                    <TextBlock x:Name="UserAccountPhoto" 
+                                               VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center" 
+                                               Margin="0 0 0 3"/>
+                                </Border>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" CornerRadius="8" >
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="1 0.5" EndPoint="0 0.5">
+                                <GradientStop Color="#2C5364" Offset="0"></GradientStop>
+                                <GradientStop Color="#203A43" Offset="1"></GradientStop>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Frame x:Name="FrameCanvas" d:Background="Gray" Margin="10"></Frame>
+
+                    </Border>
+
+
+                </Grid>
+
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

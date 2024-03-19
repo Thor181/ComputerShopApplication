@@ -10,7 +10,7 @@ namespace ComputerShopApplication.Model
             Accessories = new HashSet<Accessory>();
         }
 
-        public int IdManufacturer { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Accessory> Accessories { get; set; }

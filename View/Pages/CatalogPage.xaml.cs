@@ -43,11 +43,11 @@ namespace ComputerShopApplication.View.Pages
                                                                 .Include(x => x.IdCategoryNavigation)
                                                                 .Select(x => new InnerAccessories
                                                                 {
-                                                                    IdAccessory = x.IdAccessory,
+                                                                    IdAccessory = x.Id,
                                                                     Name = x.Name,
-                                                                    IdManufacturer = x.IdManufacturer,
+                                                                    IdManufacturer = x.ManufacturerId,
                                                                     Manufacturer = x.IdManufacturerNavigation.Name,
-                                                                    IdCategory = x.IdCategory,
+                                                                    IdCategory = x.CategoryId,
                                                                     Category = x.IdCategoryNavigation.Name,
                                                                     IsGaming = x.IsGaming,
                                                                     Price = x.Price,
@@ -73,13 +73,13 @@ namespace ComputerShopApplication.View.Pages
             int filterCategory = -1;
             if (FilterCategoryCombobox.SelectedIndex != -1)
             {
-                filterCategory = ((Category)FilterCategoryCombobox.SelectedItem).IdCategory;
+                filterCategory = ((Category)FilterCategoryCombobox.SelectedItem).Id;
             }
 
             int filterManufacturer = -1;
             if (FilterManufacturerCombobox.SelectedIndex != -1)
             {
-                filterManufacturer = ((Manufacturer)FilterManufacturerCombobox.SelectedItem).IdManufacturer;
+                filterManufacturer = ((Manufacturer)FilterManufacturerCombobox.SelectedItem).Id;
             }
 
             string filterName = null!;
@@ -103,11 +103,11 @@ namespace ComputerShopApplication.View.Pages
             List <Accessory> accessories = _db.Accessories.ToList();
             if (filterCategory != -1)
             {
-                accessories = _db.Accessories.Where(x => x.IdCategory == filterCategory).ToList();
+                accessories = _db.Accessories.Where(x => x.CategoryId == filterCategory).ToList();
             }
             if (filterManufacturer != -1)
             {
-                accessories = accessories.Where(x => x.IdManufacturer == filterManufacturer).ToList();
+                accessories = accessories.Where(x => x.ManufacturerId == filterManufacturer).ToList();
             }
             if (filterName != null)
             {
@@ -124,17 +124,17 @@ namespace ComputerShopApplication.View.Pages
 
 
 
-            List<InnerAccessories> innerAccessories = accessories.Join(_db.Categories, x => x.IdCategory, y => y.IdCategory, (x, y) => new
+            List<InnerAccessories> innerAccessories = accessories.Join(_db.Categories, x => x.CategoryId, y => y.Id, (x, y) => new
             {
                 Name = x.Name,
-                IdAccessory = x.IdAccessory,
-                IdCategory = x.IdCategory,
+                IdAccessory = x.Id,
+                IdCategory = x.CategoryId,
                 Catergory = y.Name,
-                IdManufacturer = x.IdManufacturer,
+                IdManufacturer = x.ManufacturerId,
                 IsGaming = x.IsGaming,
                 Price = x.Price,
                 Image = x.Image
-            }).Join(_db.Manufacturers, x => x.IdManufacturer, y => y.IdManufacturer, (x,y) => new InnerAccessories
+            }).Join(_db.Manufacturers, x => x.IdManufacturer, y => y.Id, (x,y) => new InnerAccessories
             {
                 Name = x.Name,
                 IdAccessory = x.IdAccessory,

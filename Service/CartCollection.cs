@@ -15,18 +15,22 @@ namespace ComputerShopApplication.Service
         {
             return CartItems;
         }
+
         public static void AddItem(InnerAccessories item)
         {
             CartItems.Add(item);
         }
+
         public static void Clear()
         {
             CartItems.Clear();
         }
+
         public static decimal GetSum()
         {
             return CartItems.Select(x => x.Price).Sum();
         }
+
         public static void RemoveItem(int id)
         {
             CartItems.Remove(CartItems.Where(x => x.IdAccessory == id).First());

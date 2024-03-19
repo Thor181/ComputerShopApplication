@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -23,6 +24,7 @@ internal class ImageWorker
         }
         return imageData;
     }
+
     /// <summary>
     /// Загружает изображение в ControlImage.Source
     /// </summary>

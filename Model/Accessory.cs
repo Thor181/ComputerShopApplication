@@ -5,10 +5,10 @@ namespace ComputerShopApplication.Model
 {
     public partial class Accessory
     {
-        public int IdAccessory { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public int IdManufacturer { get; set; }
-        public int IdCategory { get; set; }
+        public int ManufacturerId { get; set; }
+        public int CategoryId { get; set; }
         public bool IsGaming { get; set; }
         public decimal Price { get; set; }
         public byte[]? Image { get; set; }

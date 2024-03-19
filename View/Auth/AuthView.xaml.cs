@@ -33,6 +33,7 @@ namespace ComputerShopApplication.View.Auth
             if (Service.CheckerNullOrWhiteSpace.Check(LoginTextbox.Text, PasswordTextbox.Password) == true)
             {
                 User? user = _db.Users.FirstOrDefault(x => x.Login == LoginTextbox.Text && x.Password == PasswordTextbox.Password);
+
                 if (user != null)
                 {
                     Service.CurrentUser.Set(user);
@@ -41,7 +42,8 @@ namespace ComputerShopApplication.View.Auth
             }
             else
             {
-                LoginTextbox.Text = PasswordTextbox.Password = default(string);
+                LoginTextbox.Text = default(string);
+                PasswordTextbox.Password = default(string);
             }
         }
 

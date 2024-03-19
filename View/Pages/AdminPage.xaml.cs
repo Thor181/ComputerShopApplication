@@ -59,19 +59,19 @@ namespace ComputerShopApplication.View.Pages
             switch (WorkTableCombobox.SelectedItem)
             {
                 case "Товары":
-                    var accessory = db.Accessories.Where(x => x.IdAccessory == id).First();
+                    var accessory = db.Accessories.Where(x => x.Id == id).First();
                     db.Accessories.Remove(accessory);
                     break;
                 case "Производители":
-                    var manufacturer = db.Manufacturers.Where(x => x.IdManufacturer == id).First();
+                    var manufacturer = db.Manufacturers.Where(x => x.Id == id).First();
                     db.Manufacturers.Remove(manufacturer);
                     break;
                 case "Категории":
-                    var category = db.Categories.Where(x => x.IdCategory == id).First();
+                    var category = db.Categories.Where(x => x.Id == id).First();
                     db.Categories.Remove(category);
                     break;
                 case "Пользователи":
-                    var user = db.Users.Where(x => x.IdUser == id).First();
+                    var user = db.Users.Where(x => x.Id == id).First();
                     db.Users.Remove(user);
                     break;
                 default:
@@ -98,12 +98,12 @@ namespace ComputerShopApplication.View.Pages
                                                                  .Include(x => x.IdCategoryNavigation)
                                                                  .Select(x => new 
                                                                  {
-                                                                     IdAccessory = x.IdAccessory,
+                                                                     IdAccessory = x.Id,
                                                                      Name = x.Name,
                                                                      Manufacturer = x.IdManufacturerNavigation.Name,
-                                                                     IdManufacturer = x.IdManufacturer,
+                                                                     IdManufacturer = x.ManufacturerId,
                                                                      Category = x.IdCategoryNavigation.Name,
-                                                                     IdCategory = x.IdCategory,
+                                                                     IdCategory = x.CategoryId,
                                                                      IsGaming = x.IsGaming,
                                                                      Price = x.Price,
                                                                      Image = x.Image
@@ -135,7 +135,7 @@ namespace ComputerShopApplication.View.Pages
                     EditStackPanel.Visibility = Visibility.Hidden;
                     MainDataGridView.ItemsSource = db.Manufacturers.Select(x => new
                     {
-                        x.IdManufacturer,
+                        x.Id,
                         x.Name
                     }).ToList();
                     MainDataGridView.Columns[i].Header = "Код";
@@ -164,7 +164,7 @@ namespace ComputerShopApplication.View.Pages
             if (Service.CheckerNullOrWhiteSpace.Check(IdForEditPriceTextbox.Text, NewPriceTextbox.Text) == true)
             {
                 ComputerDbContext db = new();
-                Accessory? accessory = db.Accessories.FirstOrDefault(x => x.IdAccessory == int.Parse(IdForEditPriceTextbox.Text));
+                Accessory? accessory = db.Accessories.FirstOrDefault(x => x.Id == int.Parse(IdForEditPriceTextbox.Text));
                 if (accessory != null)
                 {
                     decimal.TryParse(NewPriceTextbox.Text, out decimal price);

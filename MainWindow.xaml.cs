@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ComputerShopApplication.View;
 using ComputerShopApplication.Model;
+using Microsoft.EntityFrameworkCore;
+using ComputerShopApplication.Service;
 
 namespace ComputerShopApplication
 { 
@@ -23,16 +25,44 @@ namespace ComputerShopApplication
 
         public MainWindow()
         {
+            InitializeDatabase();
+
             new AuthWindow().ShowDialog();
             InitializeComponent();
             FrameCanvas.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             this.DataContext = currentUser = Service.CurrentUser.Get();
+
             if (currentUser.Login == "admin")
-            {
                 AdminButton.Visibility = Visibility.Visible;
-            }
+
             UserAccountPhoto.Text = currentUser.Login.First().ToString();
         }
+
+        private void InitializeDatabase()
+        {
+            if (!System.IO.File.Exists(Config.ConfigFileName))
+            {
+                System.IO.File.WriteAllText(Config.ConfigFileName, "Server=localhost;Database=ComputerShopDb;Trusted_Connection=True;Encrypt=false");
+
+                MessageBox.Show($"Заполните файл {Config.ConfigFileName} в следующем формате\n\nServer=localhost;Database=ComputerShopDb;Trusted_Connection=True;Encrypt=false");
+                Environment.Exit(0);
+            }
+
+            using var db = new ComputerDbContext();
+
+            if (!db.Database.CanConnect())
+                db.Database.Migrate();
+
+            var adminExists = db.Users.Where(x => x.Login == "admin").Any();
+
+            if (!adminExists)
+            {
+                db.Users.Add(new User() { Login = "admin", Password = "123" });
+                db.SaveChanges();
+            }
+
+        }
+
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -40,14 +70,9 @@ namespace ComputerShopApplication
 
         private void FullViewButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-            {
-                this.WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                this.WindowState = WindowState.Normal;
-            }
+            this.WindowState = this.WindowState == WindowState.Normal 
+                ? WindowState.Maximized 
+                : WindowState.Normal;
         }
 
         private void CloseAppButton_Click(object sender, RoutedEventArgs e)

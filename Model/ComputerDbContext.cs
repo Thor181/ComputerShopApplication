@@ -25,103 +25,88 @@ namespace ComputerShopApplication.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql(Service.Config.ConnectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
+                optionsBuilder.UseSqlServer(Service.Config.ConnectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseCollation("utf8mb4_0900_ai_ci")
-                .HasCharSet("utf8mb4");
-
-            modelBuilder.Entity<Accessory>(entity =>
-            {
-                entity.HasKey(e => e.IdAccessory)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("accessory");
-
-                entity.HasIndex(e => e.IdCategory, "Accessory_Category_fkey_idx");
-
-                entity.HasIndex(e => e.IdManufacturer, "Accessory_Manufacturer_fkey_idx");
-
-                entity.Property(e => e.IdAccessory).HasColumnName("idAccessory");
-
-                entity.Property(e => e.IdCategory).HasColumnName("idCategory");
-
-                entity.Property(e => e.IdManufacturer).HasColumnName("idManufacturer");
-
-                entity.Property(e => e.Image)
-                    .HasColumnType("blob")
-                    .HasColumnName("image");
-
-                entity.Property(e => e.IsGaming).HasColumnName("isGaming");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(100)
-                    .HasColumnName("name");
-
-                entity.Property(e => e.Price)
-                    .HasPrecision(18, 2)
-                    .HasColumnName("price");
-
-                entity.HasOne(d => d.IdCategoryNavigation)
-                    .WithMany(p => p.Accessories)
-                    .HasForeignKey(d => d.IdCategory)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("category");
-
-                entity.HasOne(d => d.IdManufacturerNavigation)
-                    .WithMany(p => p.Accessories)
-                    .HasForeignKey(d => d.IdManufacturer)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("manufacturer");
-            });
-
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasKey(e => e.IdCategory)
-                    .HasName("PRIMARY");
+                entity.ToTable("Category");
 
-                entity.ToTable("category");
-
-                entity.Property(e => e.IdCategory).HasColumnName("idCategory");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(75)
-                    .HasColumnName("name");
+                    .HasColumnName("Name");
             });
 
             modelBuilder.Entity<Manufacturer>(entity =>
             {
-                entity.HasKey(e => e.IdManufacturer)
-                    .HasName("PRIMARY");
+                entity.ToTable("Manufacturer");
 
-                entity.ToTable("manufacturer");
-
-                entity.Property(e => e.IdManufacturer).HasColumnName("idManufacturer");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(75)
-                    .HasColumnName("name");
+                    .HasColumnName("Name");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.IdUser)
-                    .HasName("PRIMARY");
+                entity.ToTable("User");
 
-                entity.ToTable("user");
-
-                entity.Property(e => e.IdUser).HasColumnName("idUser");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.Login)
                     .HasMaxLength(50)
-                    .HasColumnName("login");
+                    .HasColumnName("Login");
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(45)
-                    .HasColumnName("password");
+                    .HasColumnName("Password");
+            });
+
+            modelBuilder.Entity<Accessory>(entity =>
+            {
+                entity.ToTable("Accessory");
+
+                entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.HasIndex(e => e.CategoryId, "Accessory_Category_fkey_idx");
+
+                entity.HasIndex(e => e.ManufacturerId, "Accessory_Manufacturer_fkey_idx");
+
+                entity.Property(e => e.CategoryId).HasColumnName("CategoryId");
+
+                entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerId");
+
+                entity.Property(e => e.Image)
+                    .HasColumnType("VARBINARY(MAX)")
+                    .HasColumnName("Image");
+
+                entity.Property(e => e.IsGaming).HasColumnName("IsGaming");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .HasColumnName("Name");
+
+                entity.Property(e => e.Price)
+                    .HasPrecision(18, 2)
+                    .HasColumnName("Price");
+
+                entity.HasOne(d => d.IdCategoryNavigation)
+                    .WithMany(p => p.Accessories)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Category");
+
+                entity.HasOne(d => d.IdManufacturerNavigation)
+                    .WithMany(p => p.Accessories)
+                    .HasForeignKey(d => d.ManufacturerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Manufacturer");
             });
 
             OnModelCreatingPartial(modelBuilder);

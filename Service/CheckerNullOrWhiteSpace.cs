@@ -17,11 +17,10 @@ namespace ComputerShopApplication.Service
         {
             foreach (var item in strings)
             {
-                if (string.IsNullOrWhiteSpace(item) == true)
-                {
+                if (string.IsNullOrWhiteSpace(item))
                     return false;
-                }
             }
+
             return true;
         }
     }

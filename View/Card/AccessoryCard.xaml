@@ -75,17 +75,35 @@
                         </Ellipse>
                         <TextBlock Text="в наличии" FontSize="7" Margin="5 0 0 0" Foreground="Gray" Padding="0" VerticalAlignment="Center"></TextBlock>
                     </StackPanel>
+                    
                     <!--Buy button-->
-                    <Button x:Name="AddToCartButton" 
-                            Background="Green"
-                            BorderThickness="0" Margin="0 30 0 0"
-                            Height="30" Width="30" Padding="0"
-                            HorizontalAlignment="Left"
-                            
-                            Click="AddToCartButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="AddToCartButton"
+                                Background="Green"
+                                BorderThickness="0"
+                                Margin="0 30 10 0"
+                                Height="30"
+                                Width="30"
+                                Padding="0"
+                                HorizontalAlignment="Left"
+                                Click="AddToCartButton_Click">
 
-                        <materialDesign:PackIcon Kind="Cart"/>
-                    </Button>
+                            <materialDesign:PackIcon Kind="Cart" />
+                        </Button>
+                        <Button x:Name="QrCodeButton"
+                                Background="Green"
+                                BorderThickness="0"
+                                Margin="0 30 0 0"
+                                Height="30"
+                                Width="30"
+                                Padding="0"
+                                HorizontalAlignment="Left"
+                                Click="QrCodeButton_Click">
+
+                            <materialDesign:PackIcon Kind="QrcodeScan" />
+                            <!--<Image Source="pack://application:,,,/resources/qr.png" Height="25" Width="25"></Image>-->
+                        </Button>
+                    </StackPanel>
 
                 </StackPanel>
 

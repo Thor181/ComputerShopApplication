@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ComputerShopApplication.Service
 {
-    internal class Config
+    public class Config
     {
-        internal static string ConnectionString { get; } = "server=localhost;database=computerdb;user=root;password=kjt560zq";
+        public const string ConfigFileName = "ConnectionString.txt";
 
+        public static string ConnectionString => System.IO.File.ReadAllText(ConfigFileName);
     }
 }

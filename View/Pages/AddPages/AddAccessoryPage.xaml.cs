@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ComputerShopApplication.Model;
-using MySqlConnector;
 
 namespace ComputerShopApplication.View.Pages.AddPages
 {
@@ -42,13 +41,15 @@ namespace ComputerShopApplication.View.Pages.AddPages
                 _db.Accessories.Add(new Accessory
                 {
                     Name = NameTextbox.Text,
-                    IdCategory = ((Category)CategoryCombobox.SelectedItem).IdCategory,
-                    IdManufacturer = ((Manufacturer)ManufacturerCombobox.SelectedItem).IdManufacturer,
+                    CategoryId = ((Category)CategoryCombobox.SelectedItem).Id,
+                    ManufacturerId = ((Manufacturer)ManufacturerCombobox.SelectedItem).Id,
                     IsGaming = (bool)IsGamingCheckbox.IsChecked!,
                     Price = decimal.Parse(PriceTextbox.Text),
                     Image = _image
                 });
+
                 _db.SaveChanges();
+
                 ((MainWindow)Application.Current.MainWindow).FrameCanvas.Navigate(new Uri("/View/Pages/AdminPage.xaml", UriKind.RelativeOrAbsolute));
             }
         }
